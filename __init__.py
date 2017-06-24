@@ -8,6 +8,7 @@ CLARIFAI_APP_ID = 'H2EWeFlad0JQkoyO7KpKKrJRvw_4x_hCIVfb8tgk'
 CLARIFAI_APP_SECRET = 'ROFbJfmbRVd6SsH7Xv1MfloxjqM4yZSod-Ul-ITG'
 appy = ClarifaiApp(CLARIFAI_APP_ID, CLARIFAI_APP_SECRET)
 appy.auth.get_token()
+
 def getColors():
     model = appy.models.get('eeed0b6733a644cea07cf4c60f87ebb7')
     image = CImage(url='https://samples.clarifai.com/metro-north.jpg')
