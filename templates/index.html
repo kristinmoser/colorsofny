@@ -5,10 +5,18 @@
 
     <body>
 
+    <form action="/submitCity" method="POST">
+        <input type="text" name = "city" placeholder="Write a city" required/> </br>
+        <input type="submit">
+        {% if error %}
+            <p class="error"><strong>Error:</strong> {{error}}</p>
+        {% endif %}
+    </form>
+
 
     <p id="first" width="1200" height="1200">
     </p>
-        <svg id="svg" width="800" height="600"></svg>
+    <svg id="svg" width="800" height="600"></svg>
 
     <script type="text/javascript">
         var svgns = "http://www.w3.org/2000/svg";
@@ -19,37 +27,39 @@
         var lineLength = 500;
         var lineHeight = 50;
 
-        {% for index in range(colorDict.keys()|length) %}
+        {% if colorDict %}
 
-        <!--paragraph for titles-->
-            <!--creates a div, puts text in it-->
-            var div = document.createElement("div");
-            var node = document.createTextNode("{{colorDict.keys()[index]}}");
-            div.appendChild(node);
+            {% for index in range(colorDict.keys()|length) %}
 
-            <!--puts the div under div #first -->
-            var element = document.getElementById("first");
-            element.appendChild(div);
+            <!--paragraph for titles-->
+                <!--creates a div, puts text in it-->
+                var div = document.createElement("div");
+                var node = document.createTextNode("{{colorDict.keys()[index]}}");
+                div.appendChild(node);
 
-            var colorWidth = lineLength/{{colorDict.values()[index]|length}}
+                <!--puts the div under div #first -->
+                var element = document.getElementById("first");
+                element.appendChild(div);
 
-            {% for x in range(colorDict.values()[index]|length) %}
-            <!--rectangles -->
-                var svg = document.getElementById('svg');
+                var colorWidth = lineLength/{{colorDict.values()[index]|length}}
 
-                var shape = document.createElementNS(svgns, "rect");
-                shape.setAttributeNS(null, "fill", "{{colorDict.values()[index][x]}}");
-                shape.setAttributeNS(null, "width", colorWidth);
-                shape.setAttributeNS(null, "height", lineHeight);
-                shape.setAttributeNS(null, "x", x);
-                shape.setAttributeNS(null, "y", y);
+                {% for x in range(colorDict.values()[index]|length) %}
+                <!--rectangles -->
+                    var svg = document.getElementById('svg');
 
-                svg.appendChild( shape );
-                x+=colorWidth;
+                    var shape = document.createElementNS(svgns, "rect");
+                    shape.setAttributeNS(null, "fill", "{{colorDict.values()[index][x]}}");
+                    shape.setAttributeNS(null, "width", colorWidth);
+                    shape.setAttributeNS(null, "height", lineHeight);
+                    shape.setAttributeNS(null, "x", x);
+                    shape.setAttributeNS(null, "y", y);
+
+                    svg.appendChild( shape );
+                    x+=colorWidth;
+                {%endfor%}
+                y += lineHeight/2;
             {%endfor%}
-            y += lineHeight/2;
-        {%endfor%}
-
+        {% endif %}
 
 
     </script>

@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from clarifai.rest import ClarifaiApp
 from clarifai.rest import Image as CImage
 import getPics
@@ -20,15 +20,19 @@ def getData(model, venues):
 
 @app.route("/")
 def hello():
+    return render_template("index.html")
+
+@app.route('/submitCity', methods=['GET', 'POST'])
+def getCity():
+    cityName = request.form['city']
+
     CLARIFAI_APP_SECRET = 'ROFbJfmbRVd6SsH7Xv1MfloxjqM4yZSod-Ul-ITG'
     appy = ClarifaiApp(CLARIFAI_APP_ID, CLARIFAI_APP_SECRET)
     appy.auth.get_token()
     model = appy.models.get('eeed0b6733a644cea07cf4c60f87ebb7')
-    venues = getPics.getVenues("New York") #end product: have this fed from search
-    return render_template("index.html", colorDict=getData(model, venues))
+    venues = getPics.getVenues(cityName)
 
-def render():
-    hello()
+    return render_template("index.html", colorDict=getData(model, venues))
 
 if __name__ == "__main__":
     app.run('127.0.0.1', 5007, debug=True)
