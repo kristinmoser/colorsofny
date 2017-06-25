@@ -1,5 +1,4 @@
 from flask import Flask, render_template
-from clarifai import rest
 from clarifai.rest import ClarifaiApp
 from clarifai.rest import Image as CImage
 
@@ -7,38 +6,30 @@ import getPics
 
 app = Flask(__name__)
 CLARIFAI_APP_ID = 'H2EWeFlad0JQkoyO7KpKKrJRvw_4x_hCIVfb8tgk'
-CLARIFAI_APP_SECRET = 'ROFbJfmbRVd6SsH7Xv1MfloxjqM4yZSod-Ul-ITG'
-appy = ClarifaiApp(CLARIFAI_APP_ID, CLARIFAI_APP_SECRET)
-appy.auth.get_token()
-model = appy.models.get('eeed0b6733a644cea07cf4c60f87ebb7')
 
-venues = getPics.getVenues("New York")
+ 
 
-
-def getData():
-    images =[]
-    jsondata =[]
+def getData(model, venues):
+    venueColorDict = {}
     for x in range(len(venues)):
         image = CImage(url=venues[x][1])
-        jsondata.append(model.predict([image]))
-    return jsondata
-
-def getColors(data):
-    colors=[]
-    names=[]
-    for x in range(len(data)):
-        current = data[x]
-        currentColorPalette = current['outputs'][0]['data']['colors']
-        currentNameList = current['outputs'][0]['data']['colors']
+        imageData = model.predict([image])
+        colors = imageData[x]['outputs'][0]['data']['colors'] #current color palette
+        colorPalette =[]
         for y in range(len(currentColorPalette)):
-            colors.append(currentColorPalette[y]['raw_hex'])
-            names.append(currentNameList[y]['w3c']['name'])
-    return colors, names
+            colorPalette.append(colors[y]['raw_hex'])
+        venueColorDict[venues[x][0]] = colorPalette
+    return venueColorDict
+
 
 @app.route("/")
 def hello():
-    data = getData()
-    return render_template("index.html", colorObjects=getColors(data))
+    CLARIFAI_APP_SECRET = 'ROFbJfmbRVd6SsH7Xv1MfloxjqM4yZSod-Ul-ITG'
+    appy = ClarifaiApp(CLARIFAI_APP_ID, CLARIFAI_APP_SECRET)
+    appy.auth.get_token()
+    model = appy.models.get('eeed0b6733a644cea07cf4c60f87ebb7')
+    venues = getPics.getVenues("New York") #end product: have this fed from search
+    return render_template("index.html", colorDict=getData(model, venues))
 
 def render():
     hello()
