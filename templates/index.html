@@ -2,23 +2,49 @@
     <head>
         <script src="https://d3js.org/d3.v4.min.js"></script>
         <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed" rel="stylesheet">
-        <link href="/style.css" type='text/css' rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Rock+Salt" rel="stylesheet">
     </head>
-
+	<style>
+		.title{
+			font-size: 110px;
+			font-family: 'Fira Sans Extra Condensed', sans-serif;
+			text-align: center;
+			margin-bottom: 0;
+			margin-top:0;
+		}
+		body{
+			background-color: #f9f6f4;
+		}
+		input{
+			display:inline-block;
+			border: none;
+			font-size: 16px;
+			font-family: 'Fira Sans Extra Condensed', sans-serif;
+			padding-bottom: 3px;
+		}
+		.submit{
+			border-radius: 2px;
+			background-color: black;
+			color:white;
+		}
+		input:focus {
+    		outline:none;
+		}
+	</style>
     <body>
-    <h1> COLORS OF </h1>
-    <form action="/submitCity" method="POST">
-        <input type="text" name = "city" placeholder="Write a city" required/> </br>
-        <input type="submit">
+    <form name='form' id='myForm' action="/submitCity" method="POST">
+        <input id='enterText' type="text" name = "city" value='' placeholder="New York" required/>
+        <input type="submit" class='submit'>
         {% if error %}
             <p class="error"><strong>Error:</strong> {{error}}</p>
         {% endif %}
     </form>
+    <h1 class="title"> COLORS OF </h1>
+    <h1 class="title" id='city'> {{cityName|upper}} </h1>
     <div id="first" width="100%" height="100%">
     	{% if colorDict %}
             {% for index in range(colorDict.keys()|length) %}
-            	<p> {{colorDict.keys()[index]}}</p>
-            	<table style="width:100%; height: 50px; border-spacing: 0px;">
+            	<table style="width:90%; margin:auto; height: 20px; border-spacing: 0px;">
             	<tr>
             	{% for x in range(colorDict.values()[index]|length) %}
             		<td style='background-color: {{colorDict.values()[index][x]}}'></td>
@@ -30,7 +56,12 @@
     </div>
 
     <script type="text/javascript">
-      
+	localStorage.setItem("city_name", "NEW YORK");
+	document.getElementById("myForm").onsubmit = function() {myFunction()};
+	function myFunction() {
+		localStorage.setItem("city_name", document.getElementById('enterText').value.toUpperCase());
+		document.getElementById("city").innerHTML = localStorage.city_name;
+	}
     </script>
 
     </body>

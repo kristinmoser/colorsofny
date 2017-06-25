@@ -32,7 +32,7 @@ def getCity():
     model = appy.models.get('eeed0b6733a644cea07cf4c60f87ebb7')
     venues = getPics.getVenues(cityName)
 
-    return render_template("index.html", colorDict=getData(model, venues))
+    return render_template("index.html", colorDict=getData(model, venues), cityName=cityName)
 
 if __name__ == "__main__":
     app.run('127.0.0.1', 5007, debug=True)
