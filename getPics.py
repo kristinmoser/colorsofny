@@ -4,7 +4,7 @@ def getVenues(cityName):
     venuesJSON = getVenuesJSON(cityName)
 
     venues = []
-    for x in xrange(15):
+    for x in xrange(2):
 
         aVenue = venuesJSON[x]['venue']
         venueName = aVenue['name']
@@ -32,6 +32,6 @@ def getVenuesJSON(cityName):
 
     return r.json()['response']['groups'][0]["items"]
 
-if __name__ == "__main__":
-    venues = getVenues("New York")
-    print ("Hello world")
+#if __name__ == "__main__":
+ #   venues = getVenues("New York")
+   # print ("Hello world")

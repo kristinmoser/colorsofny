@@ -1,8 +1,9 @@
 <html>
   <body>
-    <p> Hello world
-      <br> The word is {{color}}.
-      <br> 
+  		{% for index in range(colorObjects[0]|length) %}
+  			<p> {{index}} </p>
+    		<p style="color:{{colorObjects[0][index]}}">Hello world. The world is {{colorObjects[1][index]}} </p>
+    	{%endfor%}
     </p>
   </body>
 </html>
