@@ -1,10 +1,58 @@
 <html>
-  <body>
-  		{% for index in range(colorDict.keys()|length) %}
-  			{% for x in range(colorDict.values()[index]|length) %}
-    			<p style="color:{{colorDict.values()[index][x]}}">Hello world. The world is {{colorDict.keys()[index]}} </p>
-    		{%endfor%}
-    	{%endfor%}
+    <head>
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+    </head>
+
+    <body>
+
+
+    <p id="first" width="1200" height="1200">
     </p>
-  </body>
+        <svg id="svg" width="800" height="600"></svg>
+
+    <script type="text/javascript">
+        var svgns = "http://www.w3.org/2000/svg";
+        var x=0;
+        var y=0;
+
+
+        var lineLength = 500;
+        var lineHeight = 50;
+
+        {% for index in range(colorDict.keys()|length) %}
+
+        <!--paragraph for titles-->
+            <!--creates a div, puts text in it-->
+            var div = document.createElement("div");
+            var node = document.createTextNode("{{colorDict.keys()[index]}}");
+            div.appendChild(node);
+
+            <!--puts the div under div #first -->
+            var element = document.getElementById("first");
+            element.appendChild(div);
+
+            var colorWidth = lineLength/{{colorDict.values()[index]|length}}
+
+            {% for x in range(colorDict.values()[index]|length) %}
+            <!--rectangles -->
+                var svg = document.getElementById('svg');
+
+                var shape = document.createElementNS(svgns, "rect");
+                shape.setAttributeNS(null, "fill", "{{colorDict.values()[index][x]}}");
+                shape.setAttributeNS(null, "width", colorWidth);
+                shape.setAttributeNS(null, "height", lineHeight);
+                shape.setAttributeNS(null, "x", x);
+                shape.setAttributeNS(null, "y", y);
+
+                svg.appendChild( shape );
+                x+=colorWidth;
+            {%endfor%}
+            y += lineHeight/2;
+        {%endfor%}
+
+
+
+    </script>
+
+    </body>
 </html>

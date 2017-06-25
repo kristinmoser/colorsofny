@@ -1,13 +1,10 @@
 from flask import Flask, render_template
 from clarifai.rest import ClarifaiApp
 from clarifai.rest import Image as CImage
-
 import getPics
 
 app = Flask(__name__)
 CLARIFAI_APP_ID = 'H2EWeFlad0JQkoyO7KpKKrJRvw_4x_hCIVfb8tgk'
-
- 
 
 def getData(model, venues):
     venueColorDict = {}
@@ -21,7 +18,6 @@ def getData(model, venues):
         venueColorDict[venues[x][0]] = colorPalette
     return venueColorDict
 
-
 @app.route("/")
 def hello():
     CLARIFAI_APP_SECRET = 'ROFbJfmbRVd6SsH7Xv1MfloxjqM4yZSod-Ul-ITG'
@@ -33,7 +29,6 @@ def hello():
 
 def render():
     hello()
-
 
 if __name__ == "__main__":
     app.run('127.0.0.1', 5007, debug=True)
