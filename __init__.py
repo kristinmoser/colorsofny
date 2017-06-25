@@ -14,9 +14,9 @@ def getData(model, venues):
     for x in range(len(venues)):
         image = CImage(url=venues[x][1])
         imageData = model.predict([image])
-        colors = imageData[x]['outputs'][0]['data']['colors'] #current color palette
+        colors = imageData['outputs'][0]['data']['colors'] #current color palette
         colorPalette =[]
-        for y in range(len(currentColorPalette)):
+        for y in range(len(colors)):
             colorPalette.append(colors[y]['raw_hex'])
         venueColorDict[venues[x][0]] = colorPalette
     return venueColorDict

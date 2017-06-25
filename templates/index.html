@@ -1,7 +1,9 @@
 <html>
   <body>
   		{% for index in range(colorDict.keys()|length) %}
-    		<p style="color:{{colorDict.values()[index]}}">Hello world. The world is {{colorObjects.keys()[index]}} </p>
+  			{% for x in range(colorDict.values()[index]|length) %}
+    			<p style="color:{{colorDict.values()[index][x]}}">Hello world. The world is {{colorDict.keys()[index]}} </p>
+    		{%endfor%}
     	{%endfor%}
     </p>
   </body>
