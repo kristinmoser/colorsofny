@@ -1,10 +1,12 @@
 <html>
     <head>
         <script src="https://d3js.org/d3.v4.min.js"></script>
+        <link href="https://fonts.googleapis.com/css?family=Fira+Sans+Extra+Condensed" rel="stylesheet">
+        <link href="/style.css" type='text/css' rel="stylesheet">
     </head>
 
     <body>
-
+    <h1> COLORS OF </h1>
     <form action="/submitCity" method="POST">
         <input type="text" name = "city" placeholder="Write a city" required/> </br>
         <input type="submit">
@@ -12,56 +14,23 @@
             <p class="error"><strong>Error:</strong> {{error}}</p>
         {% endif %}
     </form>
-
-
-    <p id="first" width="1200" height="1200">
-    </p>
-    <svg id="svg" width="800" height="600"></svg>
-
-    <script type="text/javascript">
-        var svgns = "http://www.w3.org/2000/svg";
-        var x=0;
-        var y=0;
-
-
-        var lineLength = 500;
-        var lineHeight = 50;
-
-        {% if colorDict %}
-
+    <div id="first" width="100%" height="100%">
+    	{% if colorDict %}
             {% for index in range(colorDict.keys()|length) %}
-
-            <!--paragraph for titles-->
-                <!--creates a div, puts text in it-->
-                var div = document.createElement("div");
-                var node = document.createTextNode("{{colorDict.keys()[index]}}");
-                div.appendChild(node);
-
-                <!--puts the div under div #first -->
-                var element = document.getElementById("first");
-                element.appendChild(div);
-
-                var colorWidth = lineLength/{{colorDict.values()[index]|length}}
-
-                {% for x in range(colorDict.values()[index]|length) %}
-                <!--rectangles -->
-                    var svg = document.getElementById('svg');
-
-                    var shape = document.createElementNS(svgns, "rect");
-                    shape.setAttributeNS(null, "fill", "{{colorDict.values()[index][x]}}");
-                    shape.setAttributeNS(null, "width", colorWidth);
-                    shape.setAttributeNS(null, "height", lineHeight);
-                    shape.setAttributeNS(null, "x", x);
-                    shape.setAttributeNS(null, "y", y);
-
-                    svg.appendChild( shape );
-                    x+=colorWidth;
-                {%endfor%}
-                y += lineHeight/2;
+            	<p> {{colorDict.keys()[index]}}</p>
+            	<table style="width:100%; height: 50px; border-spacing: 0px;">
+            	<tr>
+            	{% for x in range(colorDict.values()[index]|length) %}
+            		<td style='background-color: {{colorDict.values()[index][x]}}'></td>
+            	{%endfor%}
+            	</tr>
+            	</table>
             {%endfor%}
         {% endif %}
+    </div>
 
-
+    <script type="text/javascript">
+      
     </script>
 
     </body>
