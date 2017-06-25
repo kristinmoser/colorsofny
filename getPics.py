@@ -4,7 +4,7 @@ def getVenues(cityName):
     venuesJSON = getVenuesJSON(cityName)
 
     venues = []
-    for x in xrange(20):
+    for x in xrange(2):
 
         aVenue = venuesJSON[x]['venue']
         venueName = aVenue['name']

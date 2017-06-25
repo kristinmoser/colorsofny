@@ -30,6 +30,10 @@
 		input:focus {
     		outline:none;
 		}
+		p{
+			font-size: 16px;
+			font-family: 'Fira Sans Extra Condensed', sans-serif;
+		}
 	</style>
     <body>
     <form name='form' id='myForm' action="/submitCity" method="POST">
@@ -39,12 +43,12 @@
             <p class="error"><strong>Error:</strong> {{error}}</p>
         {% endif %}
     </form>
-    <h1 class="title"> COLORS OF </h1>
-    <h1 class="title" id='city'> {{cityName|upper}} </h1>
+    <h1 class="title"> COLORS OF {{cityName|upper}}</h1>
     <div id="first" width="100%" height="100%">
     	{% if colorDict %}
             {% for index in range(colorDict.keys()|length) %}
-            	<table style="width:90%; margin:auto; height: 20px; border-spacing: 0px;">
+                <p class='popup' style='display:none'> {{colorDict.keys()[index]}} </p>
+            	<table class='color-row' style="width:90%; margin:auto; height: 20px; border-spacing: 0px;">
             	<tr>
             	{% for x in range(colorDict.values()[index]|length) %}
             		<td style='background-color: {{colorDict.values()[index][x]}}'></td>
@@ -56,12 +60,14 @@
     </div>
 
     <script type="text/javascript">
-	localStorage.setItem("city_name", "NEW YORK");
-	document.getElementById("myForm").onsubmit = function() {myFunction()};
-	function myFunction() {
-		localStorage.setItem("city_name", document.getElementById('enterText').value.toUpperCase());
-		document.getElementById("city").innerHTML = localStorage.city_name;
-	}
+    var tables = document.getElementsByClassName('color-row');
+	for ( var i = 0; i < tables.length; i++ ) (function(i){ 
+  		tables[i].onclick = function() {
+     		console.log('clicky!');
+     		var popups = document.getElementsByClassName('popup');
+  			popups[i].style.display = (popups[i].style.display=='block') ? "none" : "block";
+		}
+	})(i);
     </script>
 
     </body>
