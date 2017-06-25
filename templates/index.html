@@ -34,6 +34,9 @@
 			font-size: 16px;
 			font-family: 'Fira Sans Extra Condensed', sans-serif;
 		}
+		.popup{
+			
+		}
 	</style>
     <body>
     <form name='form' id='myForm' action="/submitCity" method="POST">
@@ -63,7 +66,6 @@
     var tables = document.getElementsByClassName('color-row');
 	for ( var i = 0; i < tables.length; i++ ) (function(i){ 
   		tables[i].onclick = function() {
-     		console.log('clicky!');
      		var popups = document.getElementsByClassName('popup');
   			popups[i].style.display = (popups[i].style.display=='block') ? "none" : "block";
 		}
